@@ -4,12 +4,13 @@ takes a float n as argument and returns the
 floor of the float."""
 import math
 import asyncio
+import random
 
 
 async def wait_random(max_delay: int = 10) -> float:
     """This function takes an integer argument max_delay
     and returns a random delay between 0 and
     max_delay (included) in seconds."""
-    delay = max_delay * math.random()
+    delay = random.uniform(0, max_delay)
     await asyncio.sleep(delay)
     return delay
