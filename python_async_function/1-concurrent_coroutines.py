@@ -2,16 +2,16 @@
 """Module that contains an async routine wait_n."""
 
 import asyncio
+from typing import List
 
 wait_random = __import__('0-basic_async_syntax').wait_random
 
 
-async def wait_n(n: int, max_delay: int) -> list:
+async def wait_n(n: int, max_delay: int) -> List[float]:
     """Spawn wait_random n times and return results in ascending order."""
-    tasks = [wait_random(max_delay) for _ in range(n)]
-
-    results = []
+    delays: List[float] = []
+    tasks = [asyncio.ensure_future(wait_random(max_delay)) for _ in range(n)]
     for task in asyncio.as_completed(tasks):
-        results.append(await task)
-
-    return results
+        delay = await task
+        delays.append(delay)
+    return delays
